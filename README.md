@@ -1,5 +1,5 @@
 # JEEVAN AI — Cultural Intelligence Platform
-**Qloo Agentic Hackathon 2026**
+**Enterprise Taste AI & Cultural Intelligence Platform**
 
 > **Tagline:** *Understand Taste. Discover Connections. Experience Life.*
 
@@ -79,7 +79,7 @@ A person whose taste anchors are **Christopher Nolan**, **Radiohead**, and **Tad
 The integration layer is strictly server-side, resilient, and verifiable:
 
 - **Centralized Client (`src/lib/qloo/client.ts`):** Handles header-based authentication via `X-Api-Key` and configurable base URL (`QLOO_BASE_URL`).
-- **Official Qloo Hackathon Kit Integration (`@qloo/qloo-harness`):** Native adoption of the official [`qloo/qloo-hackathon-kit`](https://github.com/qloo/qloo-hackathon-kit) harness (v0.1.26):
+- **Official Qloo Tooling Integration (`@qloo/qloo-harness`):** Native adoption of the official Qloo developer harness (v0.1.26):
   - **MCP Server Route (`qloo mcp`):** Connects to Qloo's Model Context Protocol server via `StdioClientTransport` with full environment forwarding (`qloo.mcp.json`).
   - **CLI Workflow Route (`qloo exec` & `qloo api`):** Supports direct validated workflow and endpoint execution from both Python (`backend/qloo/harness_bridge.py`) and TypeScript (`src/lib/qloo/harness-bridge.ts`).
   - **Envelope Standardization:** Strictly adheres to Qloo's 6-state response envelope (`ok`, `empty`, `needs_input`, `partial`, `degraded`, `error`).
@@ -144,7 +144,7 @@ cp .env.example .env.local
 ## 6. Running Jeevan AI
 
 ### Option A: Interactive Python CLI (Terminal Mode)
-Judges and developers can interact with all three agents directly in Python:
+Interact with all three agents directly in Python:
 ```bash
 # Run automated Python verification suite
 python backend/cli.py test
@@ -186,7 +186,7 @@ npm start
 
 ---
 
-## 6. Demonstration Scenarios for Judges
+## 6. Curated Demonstration Scenarios
 
 | Agent | Input Scenario | Expected Cultural Discovery |
 | :--- | :--- | :--- |

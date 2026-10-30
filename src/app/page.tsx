@@ -61,10 +61,10 @@ export default function HomePage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-radial-aura pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-8">
-          {/* Hackathon Badge */}
+          {/* Platform Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.1] text-xs text-zinc-300 shadow-inner">
             <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
-            <span className="font-semibold text-white">Qloo Agentic Hackathon 2026</span>
+            <span className="font-semibold text-white">Taste AI Enterprise</span>
             <span className="text-zinc-500">|</span>
             <span className="text-indigo-400 font-medium">Cultural Intelligence Platform</span>
           </div>

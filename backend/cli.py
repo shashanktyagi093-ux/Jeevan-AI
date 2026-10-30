@@ -1,6 +1,6 @@
 """
 Interactive Python CLI for Jeevan AI
-Qloo Agentic Hackathon 2026
+Taste AI & Cultural Intelligence Platform
 """
 
 import sys
@@ -133,7 +133,7 @@ def main():
 
     print("================================================")
     print("     JEEVAN AI -- CULTURAL INTELLIGENCE (PYTHON) ")
-    print("          Qloo Agentic Hackathon 2026           ")
+    print("          Taste AI Enterprise Edition           ")
     print("================================================")
     print("1. System & Qloo Health Diagnostics")
     print("2. Run Agent 1: Jeevan Travel Concierge")

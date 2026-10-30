@@ -20,7 +20,7 @@ from backend.models.qloo import QlooSearchResponse
 app = FastAPI(
     title=settings.app_name,
     version=settings.version,
-    description="Python-powered Cultural Intelligence & Agentic AI Backend for Qloo Agentic Hackathon 2026",
+    description="Python-powered Cultural Intelligence & Agentic AI Backend for Jeevan AI Taste Platform",
 )
 
 # Enable CORS for Next.js and local clients

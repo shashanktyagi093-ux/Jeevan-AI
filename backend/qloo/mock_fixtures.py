@@ -1,6 +1,6 @@
 """
 Verified Cultural Entities and Venue Insights Fixtures
-Provides rock-solid evaluation resilience for Qloo Agentic Hackathon 2026.
+Provides rock-solid evaluation resilience for Jeevan AI Taste Intelligence.
 """
 
 from typing import List, Dict, Any

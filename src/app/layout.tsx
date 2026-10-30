@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jeevan AI — Cultural Intelligence Platform | Qloo Hackathon 2026",
+  title: "Jeevan AI — Cultural Intelligence Platform",
   description:
     "Understand Taste. Discover Connections. Experience Life. A unified cultural intelligence platform powered by Qloo Taste AI and agentic orchestration.",
   keywords: [

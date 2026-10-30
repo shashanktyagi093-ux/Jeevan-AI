@@ -18,11 +18,11 @@ export function Footer() {
                 className="h-7 w-auto object-contain"
               />
               <span className="text-[10px] bg-white/[0.08] px-1.5 py-0.5 rounded text-zinc-300">
-                Hackathon Edition
+                Enterprise Edition
               </span>
             </div>
             <p className="text-zinc-400 text-xs leading-relaxed max-w-md">
-              A unified cultural intelligence platform built for the <strong className="text-zinc-200">Qloo Agentic Hackathon 2026</strong>. Understanding relationships between seemingly unrelated cultural affinities to transform taste into real-world experiences.
+              A unified cultural intelligence platform powered by <strong className="text-zinc-200">Qloo Taste AI</strong>. Understanding relationships between seemingly unrelated cultural affinities to transform taste into real-world experiences.
             </p>
             <div className="flex items-center gap-4 text-[11px] text-zinc-500 pt-2">
               <span className="flex items-center gap-1">
@@ -65,7 +65,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Hackathon Resources */}
+          {/* Intelligence Resources */}
           <div>
             <h4 className="text-xs font-semibold text-zinc-200 uppercase tracking-wider mb-3">
               Official Intelligence
@@ -93,7 +93,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500">
-          <p>© 2026 Jeevan AI. Built for the Qloo Agentic Hackathon 2026.</p>
+          <p>© 2026 Jeevan AI. Cultural Intelligence & Taste Graph Architecture.</p>
           <div className="flex items-center gap-4">
             <span>Understand Taste.</span>
             <span>•</span>

@@ -23,7 +23,7 @@ export default function AboutPage() {
         <div className="space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-400">
             <Cpu className="w-3.5 h-3.5" />
-            <span>QLOO AGENTIC HACKATHON 2026</span>
+            <span>TASTE GRAPH ARCHITECTURE</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
             The Cultural Intelligence Architecture

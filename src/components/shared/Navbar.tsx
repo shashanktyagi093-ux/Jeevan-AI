@@ -7,9 +7,10 @@ import { Sparkles, Compass, HeartHandshake, Wand2, Info, ArrowUpRight, Terminal 
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/travel", label: "Jeevan Travel", icon: Compass, badge: "Concierge" },
-  { href: "/match", label: "Jeevan Match", icon: HeartHandshake, badge: "Maximin" },
-  { href: "/studio", label: "Jeevan Studio", icon: Wand2, badge: "Creative Dir" },
+  { href: "/agents", label: "Agent Hub", icon: Sparkles },
+  { href: "/travel", label: "Travel", icon: Compass, badge: "Concierge" },
+  { href: "/match", label: "Match", icon: HeartHandshake, badge: "Maximin" },
+  { href: "/studio", label: "Studio", icon: Wand2, badge: "Creative Dir" },
   { href: "/about", label: "Architecture", icon: Info },
 ];
 

@@ -195,5 +195,105 @@ CITY_CULTURAL_VENUES: Dict[str, List[QlooInsightItem]] = {
                 cultural_correlation_note="Listeners of Kid A / OK Computer show an extraordinary 4.5x over-index for specialized listening bars."
             )
         )
+    ],
+    "paris": [
+        QlooInsightItem(
+            entity=QlooEntity(
+                id="urn:qloo:entity:place:frequence-paris",
+                name="Fréquence (11th Arrondissement)",
+                category="dining",
+                type="Audiophile Cocktail Lounge",
+                popularity=91.0,
+                affinity=95.4,
+                description="Intimate vinyl-lined cocktail salon with custom analog turntable setups and French natural aperitifs.",
+                tags=["vinyl-curation", "natural-aperitifs", "analog-warmth", "craft-mixology"],
+                metadata={
+                    "location": {"city": "Paris", "neighborhood": "11e Arrondissement", "address": "20 Rue Keller"},
+                    "priceLevel": "$$",
+                    "vibe": ["warm-timber", "intimate-nocturne", "eclectic-grooves"]
+                }
+            ),
+            affinity_score=95.4,
+            over_indexing_ratio=3.8,
+            qloo_explainability=QlooExplainability(
+                matched_signal_name="Daft Punk & French Touch",
+                shared_aesthetic_tag="analog groove & tactile vinyl warmth",
+                cultural_correlation_note="High over-indexing among European electronic music enthusiasts and boutique vinyl cocktail bars."
+            )
+        ),
+        QlooInsightItem(
+            entity=QlooEntity(
+                id="urn:qloo:entity:place:fondation-louis-vuitton",
+                name="Fondation Louis Vuitton",
+                category="place",
+                type="Architectural Art Pavilion",
+                popularity=95.0,
+                affinity=96.8,
+                description="Frank Gehry glass sailboat monument in the Bois de Boulogne hosting monumental modern art exhibitions.",
+                tags=["deconstructivism", "monumental-glass", "spatial-acoustics", "contemporary-art"],
+                metadata={
+                    "location": {"city": "Paris", "neighborhood": "Bois de Boulogne", "address": "8 Avenue du Mahatma Gandhi"},
+                    "priceLevel": "$$",
+                    "vibe": ["sculptural", "monumental", "light-filled"]
+                }
+            ),
+            affinity_score=96.8,
+            over_indexing_ratio=4.2,
+            qloo_explainability=QlooExplainability(
+                matched_signal_name="Tadao Ando & Christopher Nolan",
+                shared_aesthetic_tag="structural deconstruction & scale",
+                cultural_correlation_note="Affinity for complex architectural staging mirrors Gehry's sweeping sculptural forms."
+            )
+        )
+    ],
+    "berlin": [
+        QlooInsightItem(
+            entity=QlooEntity(
+                id="urn:qloo:entity:place:boros-collection-berlin",
+                name="The Boros Collection (Bunker Berlin)",
+                category="place",
+                type="Brutalist Bunker Gallery",
+                popularity=94.0,
+                affinity=97.6,
+                description="Monumental converted WWII bunker with 2-meter thick concrete walls housing contemporary site-specific sculpture.",
+                tags=["raw-concrete", "wwii-bunker", "spatial-installation", "hard-minimalism"],
+                metadata={
+                    "location": {"city": "Berlin", "neighborhood": "Mitte", "address": "Reinhardtstraße 20"},
+                    "priceLevel": "$$",
+                    "vibe": ["austere", "historical-dystopian", "meditative"]
+                }
+            ),
+            affinity_score=97.6,
+            over_indexing_ratio=4.9,
+            qloo_explainability=QlooExplainability(
+                matched_signal_name="Radiohead & Tadao Ando",
+                shared_aesthetic_tag="concrete dystopian silence & monumental weight",
+                cultural_correlation_note="Extraordinary 4.9x over-index among fans of dark ambient electronics and raw architectural brutalism."
+            )
+        ),
+        QlooInsightItem(
+            entity=QlooEntity(
+                id="urn:qloo:entity:place:rhinocéros-berlin",
+                name="Rhinoçéros Jazz Kissa",
+                category="music",
+                type="Analog Audio Salon",
+                popularity=89.0,
+                affinity=95.9,
+                description="1970s-inspired vintage listening bar powered by wooden horn speakers, single-malt whiskies, and vinyl jazz records.",
+                tags=["vintage-horns", "vinyl-audio", "single-malts", "low-amber-illumination"],
+                metadata={
+                    "location": {"city": "Berlin", "neighborhood": "Prenzlauer Berg", "address": "Rhinower Str. 3"},
+                    "priceLevel": "$$",
+                    "vibe": ["shadowed", "acoustic-reverence", "contemplative"]
+                }
+            ),
+            affinity_score=95.9,
+            over_indexing_ratio=4.0,
+            qloo_explainability=QlooExplainability(
+                matched_signal_name="Haruki Murakami & Radiohead",
+                shared_aesthetic_tag="subtle urban solitude & audiophile reverence",
+                cultural_correlation_note="Strong mutual resonance between literary jazz lovers and vintage Japanese kissa audio setups in Berlin."
+            )
+        )
     ]
 }

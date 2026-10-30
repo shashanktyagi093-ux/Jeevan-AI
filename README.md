@@ -79,6 +79,10 @@ A person whose taste anchors are **Christopher Nolan**, **Radiohead**, and **Tad
 The integration layer is strictly server-side, resilient, and verifiable:
 
 - **Centralized Client (`src/lib/qloo/client.ts`):** Handles header-based authentication via `X-Api-Key` and configurable base URL (`QLOO_BASE_URL`).
+- **Official Qloo Hackathon Kit Integration (`@qloo/qloo-harness`):** Native adoption of the official [`qloo/qloo-hackathon-kit`](https://github.com/qloo/qloo-hackathon-kit) harness (v0.1.26):
+  - **MCP Server Route (`qloo mcp`):** Connects to Qloo's Model Context Protocol server via `StdioClientTransport` with full environment forwarding (`qloo.mcp.json`).
+  - **CLI Workflow Route (`qloo exec` & `qloo api`):** Supports direct validated workflow and endpoint execution from both Python (`backend/qloo/harness_bridge.py`) and TypeScript (`src/lib/qloo/harness-bridge.ts`).
+  - **Envelope Standardization:** Strictly adheres to Qloo's 6-state response envelope (`ok`, `empty`, `needs_input`, `partial`, `degraded`, `error`).
 - **Entity Resolution (`src/lib/qloo/entity-resolver.ts`):** Disambiguates user-entered text into verified Qloo entity identifiers and extracts aesthetic domain tags.
 - **Cross-Domain Insights (`src/lib/qloo/insights-service.ts`):** Queries `/v2/insights` with `signal.interests.entities`, target category scoping, and geo-location filters.
 - **In-Memory LRU Cache (`src/lib/utils/cache.ts`):** Caches high-frequency entity queries to reduce API latency and safeguard rate limits.

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { MatchAgent } from "@/lib/agents/match-agent";
 import { MatchUserInput } from "@/types/agent";
 
+const PYTHON_BACKEND_URL = process.env.PYTHON_BACKEND_URL || "http://127.0.0.1:8000";
+
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as MatchUserInput;
@@ -10,6 +12,22 @@ export async function POST(req: NextRequest) {
         { error: "Both Person A and Person B tastes are required." },
         { status: 400 }
       );
+    }
+
+    // Attempt routing to Python FastAPI Agent backend first
+    try {
+      const pyRes = await fetch(`${PYTHON_BACKEND_URL}/api/agents/match`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(3000),
+      });
+      if (pyRes.ok) {
+        const pyData = await pyRes.json();
+        return NextResponse.json(pyData);
+      }
+    } catch {
+      // Fall through to built-in agent
     }
 
     const result = await MatchAgent.execute(body);

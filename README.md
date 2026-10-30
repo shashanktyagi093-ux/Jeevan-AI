@@ -87,15 +87,19 @@ The integration layer is strictly server-side, resilient, and verifiable:
 
 ---
 
-## 4. Technology Stack
+## 4. Technology Stack & Multi-Language Architecture
 
-- **Framework:** Next.js 16.4 (App Router, Turbopack, React 19)
-- **Language:** TypeScript 5.0 (Strict mode, end-to-end typed contracts)
-- **Styling:** Tailwind CSS v4, Custom Midnight Luxury Theme, Glassmorphism
-- **Iconography:** Lucide React
-- **Cultural Intelligence:** Qloo Taste AI™ API (`/v2/search`, `/v2/insights`)
-- **Reasoning Provider:** Google GenAI (`@google/genai`) / Configurable LLM
-- **Testing & Verification:** Dedicated automated test runner (`scripts/test-agents.ts`)
+Jeevan AI is built on a **high-performance dual-engine architecture**:
+
+- **AI Backend & Core Orchestration:** **Python 3.14 / FastAPI / Pydantic 2 / HTTPX**
+  - All 3 autonomous agents implemented in pure Python (`backend/agents/`)
+  - Qloo Taste AI API Client in Python (`backend/qloo/client.py`)
+  - Maximin Taste Fairness algorithm in Python (`backend/qloo/insights_service.py`)
+  - Interactive Python CLI for terminal testing (`backend/cli.py`)
+- **Web Application & UI Layer:** **Next.js 16.4 / React 19 / TypeScript / Tailwind CSS v4**
+  - Real-time cultural graph visualizers, itinerary builders, and creative direction dossiers
+  - Server-side route handlers seamlessly communicating with the Python FastAPI backend
+- **Cultural Intelligence:** Qloo Taste AI™ Graph (`/v2/search`, `/v2/insights`)
 
 ---
 
@@ -103,41 +107,63 @@ The integration layer is strictly server-side, resilient, and verifiable:
 
 ### Prerequisites
 - Node.js 20+ (tested on Node.js v26.12.1)
-- npm 10+
+- Python 3.10+ (tested on Python 3.14.4)
 
-### Installation
+### 1. Python Environment Setup
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/jeevan-ai.git
-cd jeevan-ai
+# Initialize virtual environment
+python -m venv .venv
 
-# Install dependencies
+# Activate virtual environment
+# Windows:
+.\.venv\Scripts\activate
+# Linux/macOS:
+source .venv/bin/activate
+
+# Install Python backend dependencies
+pip install -r requirements.txt
+```
+
+### 2. Frontend Setup
+```bash
 npm install
 ```
 
-### Environment Configuration
-Copy `.env.example` to `.env.local` and configure your API keys:
+### 3. Environment Configuration
+Copy `.env.example` to `.env.local`:
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local`:
-```env
-# Qloo Taste AI API Credentials
-QLOO_API_KEY=your_qloo_api_key_here
-QLOO_BASE_URL=https://api.qloo.com
+---
 
-# LLM Reasoning Engine (Optional, for dynamic contextual synthesis)
-GEMINI_API_KEY=your_gemini_api_key_here
+## 6. Running Jeevan AI
 
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+### Option A: Interactive Python CLI (Terminal Mode)
+Judges and developers can interact with all three agents directly in Python:
+```bash
+# Run automated Python verification suite
+python backend/cli.py test
+
+# Launch interactive Python CLI menu
+python backend/cli.py
 ```
 
-> **Note on Offline / Evaluation Resilience:**  
-> If `QLOO_API_KEY` is not provided, Jeevan AI automatically activates its high-fidelity verified taste graph cache mode (`src/lib/qloo/mock-fallback.ts`). This ensures uninterrupted judging and demonstrations regardless of network outages or API rate quotas.
+### Option B: Python FastAPI Backend Server
+Launch the Python backend with automatic Swagger documentation at `http://127.0.0.1:8000/docs`:
+```bash
+uvicorn backend.main:app --reload --port 8000
+```
 
-### Verification Suite
-Execute the agentic test suite to verify all three agents:
+### Option C: Web Experience (Next.js + Python Backend)
+```bash
+# Terminal 1: Run Python AI Agent Server
+uvicorn backend.main:app --reload --port 8000
+
+# Terminal 2: Run Next.js Web Application
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```bash
 npx tsx scripts/test-agents.ts
 ```

@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Sparkles, Compass, HeartHandshake, Wand2, Info, ArrowUpRight, Terminal } from "lucide-react";
+import { Sparkles, Compass, HeartHandshake, Wand2, Info, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -17,24 +16,6 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const [pythonOnline, setPythonOnline] = useState(false);
-
-  useEffect(() => {
-    async function checkBackend() {
-      try {
-        const res = await fetch("/api/qloo/health");
-        if (res.ok) {
-          const data = await res.json();
-          if (data.pythonBackend?.online) {
-            setPythonOnline(true);
-          }
-        }
-      } catch {
-        // Backend check silent fallback
-      }
-    }
-    checkBackend();
-  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#07080d]/70 backdrop-blur-2xl glass-specular shadow-lg shadow-black/20">
@@ -84,25 +65,13 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* Live Qloo & Python Status Indicators */}
+        {/* Action Button */}
         <div className="flex items-center gap-3">
-          {pythonOnline && (
-            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] text-blue-400 font-mono">
-              <Terminal className="w-3 h-3 text-blue-400" />
-              <span>Python FastAPI</span>
-            </div>
-          )}
-
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium">Qloo Taste AI™ Active</span>
-          </div>
-
           <Link
             href="/travel"
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-md shadow-indigo-600/25 hover:opacity-95 transition-all"
           >
-            <span>Launch Agent</span>
+            <span>Launch Workspace</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>

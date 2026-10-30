@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
+import { GlassyTelemetryBar } from "@/components/dashboard/GlassyTelemetryBar";
 import { EntityTagInput } from "@/components/shared/EntityTagInput";
 import { AgentReasoningSteps } from "@/components/shared/AgentReasoningSteps";
 import { CulturalNodeModal } from "@/components/shared/CulturalNodeModal";
@@ -136,6 +137,7 @@ export default function MatchPage() {
   return (
     <div className="min-h-screen bg-[#07080d] text-zinc-100 flex flex-col">
       <Navbar />
+      <GlassyTelemetryBar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
         {/* Header section with Presets */}

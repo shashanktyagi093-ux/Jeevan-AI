@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -12,45 +11,12 @@ import {
   Shield,
   Layers,
   Cpu,
-  ChevronRight,
 } from "lucide-react";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
-
-const PRESET_TASTES = [
-  {
-    title: "Cerebral Auteur",
-    seeds: ["Christopher Nolan", "Radiohead", "Tadao Ando"],
-    crossovers: [
-      { name: "21_21 DESIGN SIGHT", cat: "Architecture / Museum", affinity: 97.2, why: "Spatial geometry & monumental precision" },
-      { name: "Meikyoku Kissa Lion", cat: "Audiophile Lounge", affinity: 96.1, why: "Reverent analog soundscapes & deep focus" },
-      { name: "Temple Bar (NoHo)", cat: "Nocturne Lounge", affinity: 95.2, why: "Low-light cinema atmosphere & quiet luxury" },
-    ],
-  },
-  {
-    title: "Vintage Whimsy",
-    seeds: ["Wes Anderson", "Daft Punk", "Scandinavian Design"],
-    crossovers: [
-      { name: "Daikanyama T-Site", cat: "Art & Vinyl Complex", affinity: 94.6, why: "Meticulous visual lattice & analog vinyl stations" },
-      { name: "Brilliant Corners", cat: "Hi-Fi Listening Diner", affinity: 94.8, why: "Warm analog warmth paired with natural wines" },
-      { name: "Bar Trench (Ebisu)", cat: "Herbal Absinthe Salon", affinity: 95.8, why: "1920s salon intimacy & delicate craft" },
-    ],
-  },
-  {
-    title: "Nocturne Minimalist",
-    seeds: ["Wong Kar-wai", "Aphex Twin", "Maison Margiela"],
-    crossovers: [
-      { name: "Barbican Centre", cat: "Brutalist Arts Hall", affinity: 97.5, why: "Dystopian architectural scale & experimental art" },
-      { name: "Dia Chelsea", cat: "Spatial Light Installation", affinity: 96.7, why: "Deconstructed negative space & raw materials" },
-      { name: "AURA Sound Lab", cat: "Modular Audio Room", affinity: 96.0, why: "Glitch soundscapes & tactile micro-tonality" },
-    ],
-  },
-];
+import { MainGlassyDashboard } from "@/components/dashboard/MainGlassyDashboard";
 
 export default function HomePage() {
-  const [selectedPresetIndex, setSelectedPresetIndex] = useState(0);
-  const activePreset = PRESET_TASTES[selectedPresetIndex];
-
   return (
     <div className="min-h-screen bg-[#07080d] text-zinc-100 flex flex-col selection:bg-indigo-500 selection:text-white">
       <Navbar />
@@ -140,102 +106,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Interactive Taste Graph Preview */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-10">
-        <div className="text-center space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">
-            Interactive Cultural Topology
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-            How Cultural Preferences Bridge Across Categories
-          </h2>
-          <p className="text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto">
-            Select a taste archetype below to see how Qloo resolves cross-domain affinity signals into tangible real-world destinations.
-          </p>
-        </div>
-
-        {/* Preset Selector */}
-        <div className="flex justify-center gap-2 flex-wrap">
-          {PRESET_TASTES.map((preset, idx) => (
-            <button
-              key={preset.title}
-              type="button"
-              onClick={() => setSelectedPresetIndex(idx)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                selectedPresetIndex === idx
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30"
-                  : "bg-white/[0.04] text-zinc-400 hover:text-white border border-white/[0.06]"
-              }`}
-            >
-              {preset.title}
-            </button>
-          ))}
-        </div>
-
-        {/* Interactive Visualizer Card */}
-        <div className="p-8 rounded-3xl bg-gradient-to-b from-[#0f121d] to-[#07080d] border border-white/[0.08] shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Seeds Column */}
-          <div className="lg:col-span-5 space-y-4">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">
-              Resolved Cultural Seeds
-            </span>
-            <div className="space-y-2">
-              {activePreset.seeds.map((seed, i) => (
-                <div
-                  key={i}
-                  className="p-3.5 rounded-xl bg-[#131726] border border-indigo-500/30 flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Sparkles className="w-4 h-4 text-indigo-400" />
-                    <span className="text-xs font-semibold text-white">{seed}</span>
-                  </div>
-                  <span className="text-[10px] text-indigo-300 font-mono bg-indigo-500/15 px-2 py-0.5 rounded">
-                    Signal Seed
-                  </span>
-                </div>
-              ))}
-            </div>
-            <p className="text-[11px] text-zinc-400 leading-relaxed pt-2">
-              These entities share high multidimensional density in Qloo&apos;s 5.5M+ entity cultural graph.
-            </p>
-          </div>
-
-          {/* Connection Bridge Arrow */}
-          <div className="lg:col-span-2 flex flex-col items-center justify-center text-indigo-400 space-y-2">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 hidden lg:block">
-              Qloo /v2/insights
-            </span>
-            <div className="w-10 h-10 rounded-full bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center">
-              <ChevronRight className="w-5 h-5 text-indigo-400" />
-            </div>
-          </div>
-
-          {/* Predicted Crossovers */}
-          <div className="lg:col-span-5 space-y-4">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400">
-              Cross-Category Over-Indexing Venues
-            </span>
-            <div className="space-y-2">
-              {activePreset.crossovers.map((cross, i) => (
-                <div
-                  key={i}
-                  className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-emerald-500/40 transition-colors space-y-1"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white">{cross.name}</span>
-                    <span className="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">
-                      {cross.affinity}% Affinity
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-[10px] text-zinc-400">
-                    <span>{cross.cat}</span>
-                    <span className="text-zinc-500 italic">{cross.why}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      {/* Interactive Glassy Dashboard Core */}
+      <section className="py-12 w-full">
+        <MainGlassyDashboard />
       </section>
 
       {/* The 3 Autonomous Agents Showcase */}

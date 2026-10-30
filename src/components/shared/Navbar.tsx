@@ -37,7 +37,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#07080d]/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#07080d]/70 backdrop-blur-2xl glass-specular shadow-lg shadow-black/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
@@ -51,8 +51,8 @@ export function Navbar() {
               className="h-8 w-auto object-contain group-hover:opacity-95 transition-opacity"
             />
           </div>
-          <span className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-semibold bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 rounded-md">
-            Qloo 2026
+          <span className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-semibold bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 rounded-md font-mono">
+            TASTE COCKPIT
           </span>
         </Link>
 

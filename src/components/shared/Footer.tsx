@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles, Shield, Cpu, ExternalLink } from "lucide-react";
 
 export function Footer() {
@@ -8,11 +9,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Brand info */}
           <div className="md:col-span-2 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center">
-                <Sparkles className="w-3.5 h-3.5 text-white" />
-              </div>
-              <span className="font-semibold text-white text-sm tracking-tight">JEEVAN AI</span>
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/brand/jeevan-logo.png"
+                alt="Jeevan AI Logo"
+                width={120}
+                height={32}
+                className="h-7 w-auto object-contain"
+              />
               <span className="text-[10px] bg-white/[0.08] px-1.5 py-0.5 rounded text-zinc-300">
                 Hackathon Edition
               </span>

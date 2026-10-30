@@ -26,6 +26,11 @@ export const metadata: Metadata = {
     "Maximin Fairness",
     "Creative Direction",
   ],
+  icons: {
+    icon: "/brand/jeevan-icon.png",
+    shortcut: "/brand/jeevan-icon.png",
+    apple: "/brand/jeevan-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

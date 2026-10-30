@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Sparkles,
   Compass,
@@ -66,6 +67,20 @@ export default function HomePage() {
             <span className="font-semibold text-white">Qloo Agentic Hackathon 2026</span>
             <span className="text-zinc-500">|</span>
             <span className="text-indigo-400 font-medium">Cultural Intelligence Platform</span>
+          </div>
+
+          {/* Official Engine Brand Logo */}
+          <div className="flex justify-center pt-2">
+            <div className="p-2 sm:p-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] shadow-2xl backdrop-blur-md hover:border-indigo-500/30 transition-all">
+              <Image
+                src="/brand/jeevan-logo.png"
+                alt="Jeevan AI Logo"
+                width={280}
+                height={73}
+                priority
+                className="h-11 sm:h-14 w-auto object-contain"
+              />
+            </div>
           </div>
 
           {/* Master Tagline */}

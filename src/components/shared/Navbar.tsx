@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Sparkles, Compass, HeartHandshake, Wand2, Info, ArrowUpRight, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -39,23 +40,20 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#07080d]/85 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-            <Sparkles className="w-5 h-5 text-white" />
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="relative h-8 w-auto flex items-center">
+            <Image
+              src="/brand/jeevan-logo.png"
+              alt="Jeevan AI Logo"
+              width={130}
+              height={34}
+              priority
+              className="h-8 w-auto object-contain group-hover:opacity-95 transition-opacity"
+            />
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-lg tracking-tight text-white group-hover:text-indigo-200 transition-colors">
-                JEEVAN <span className="text-indigo-400 font-bold">AI</span>
-              </span>
-              <span className="px-1.5 py-0.5 text-[10px] uppercase tracking-wider font-semibold bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 rounded-md">
-                Qloo 2026
-              </span>
-            </div>
-            <span className="text-[10px] text-zinc-400 tracking-wide hidden sm:block">
-              Cultural Intelligence Platform
-            </span>
-          </div>
+          <span className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-semibold bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 rounded-md">
+            Qloo 2026
+          </span>
         </Link>
 
         {/* Navigation Items */}

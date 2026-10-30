@@ -11,16 +11,17 @@ import {
   ArrowRight,
   RotateCcw,
   Download,
-  Share2,
   CheckCircle,
   AlertCircle,
-  ExternalLink,
+  Layers,
+  SlidersHorizontal,
 } from "lucide-react";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
 import { EntityTagInput } from "@/components/shared/EntityTagInput";
 import { AgentReasoningSteps } from "@/components/shared/AgentReasoningSteps";
-import { TravelItineraryOutput } from "@/types/agent";
+import { CulturalNodeModal } from "@/components/shared/CulturalNodeModal";
+import { TravelItineraryOutput, TravelVenueItem } from "@/types/agent";
 
 const CITIES = [
   { id: "Tokyo", name: "Tokyo", country: "Japan", highlight: "Ebisu, Roppongi, Daikanyama" },
@@ -28,6 +29,24 @@ const CITIES = [
   { id: "London", name: "London", country: "United Kingdom", highlight: "Barbican, Dalston, Shoreditch" },
   { id: "Paris", name: "Paris", country: "France", highlight: "Le Marais, Belleville, Canal Saint-Martin" },
   { id: "Berlin", name: "Berlin", country: "Germany", highlight: "Mitte, Kreuzberg, Neukölln" },
+];
+
+const PRESETS = [
+  {
+    label: "Tokyo: Nolan + Radiohead + Ando",
+    seeds: ["Christopher Nolan", "Radiohead", "Tadao Ando"],
+    city: "Tokyo",
+  },
+  {
+    label: "London: Aphex Twin + Brutalism",
+    seeds: ["Aphex Twin", "Radiohead", "Tadao Ando"],
+    city: "London",
+  },
+  {
+    label: "New York: Wong Kar-wai + Hi-Fi",
+    seeds: ["Wong Kar-wai", "Haruki Murakami", "Maison Margiela"],
+    city: "New York",
+  },
 ];
 
 export default function TravelPage() {
@@ -45,6 +64,16 @@ export default function TravelPage() {
   const [result, setResult] = useState<TravelItineraryOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Modal inspection state
+  const [inspectVenue, setInspectVenue] = useState<TravelVenueItem | null>(null);
+  const [filterSlot, setFilterSlot] = useState<string>("all");
+
+  const loadPreset = (preset: typeof PRESETS[0]) => {
+    setTasteSeeds(preset.seeds);
+    setDestination(preset.city);
+    setResult(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (tasteSeeds.length === 0) {
@@ -57,7 +86,6 @@ export default function TravelPage() {
     setResult(null);
     setCurrentStep(0);
 
-    // Step simulation for transparency
     const stepInterval = setInterval(() => {
       setCurrentStep((prev) => (prev < 4 ? prev + 1 : prev));
     }, 600);
@@ -103,23 +131,49 @@ export default function TravelPage() {
     URL.revokeObjectURL(url);
   };
 
+  const filteredVenues = result?.venues.filter(
+    (v) => filterSlot === "all" || v.timeSlot === filterSlot
+  ) || [];
+
   return (
     <div className="min-h-screen bg-[#07080d] text-zinc-100 flex flex-col">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-        {/* Header section */}
-        <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-400">
-            <Compass className="w-3.5 h-3.5" />
-            <span>AGENT 1: JEEVAN TRAVEL</span>
+        {/* Header section with Presets */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.06] pb-8">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-400">
+              <Compass className="w-3.5 h-3.5" />
+              <span>AGENT 1: JEEVAN TRAVEL</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              Cultural Travel Concierge
+            </h1>
+            <p className="text-sm sm:text-base text-zinc-400 max-w-2xl leading-relaxed">
+              Transform your aesthetic tastes in cinema, literature, design, and music into a personalized real-world travel itinerary powered by Qloo Taste AI.
+            </p>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Cultural Travel Concierge
-          </h1>
-          <p className="text-sm sm:text-base text-zinc-400 max-w-2xl leading-relaxed">
-            Transform your distinct aesthetic tastes in cinema, literature, design, and music into a personalized real-world travel itinerary powered by Qloo Taste AI.
-          </p>
+
+          {/* Quick-Load Judge Presets */}
+          <div className="space-y-2 shrink-0">
+            <span className="text-[11px] text-zinc-400 flex items-center gap-1.5 font-medium">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>Judge Quick-Start Scenarios:</span>
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {PRESETS.map((p, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => loadPreset(p)}
+                  className="px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-indigo-600/20 text-zinc-300 hover:text-indigo-200 border border-white/[0.08] hover:border-indigo-500/40 text-xs font-medium transition-all"
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Input Form & Preview */}
@@ -211,7 +265,7 @@ export default function TravelPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 text-white font-semibold text-xs tracking-wide shadow-lg shadow-indigo-600/30 hover:opacity-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 text-white font-semibold text-xs tracking-wide shadow-lg shadow-indigo-600/30 hover:opacity-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -244,12 +298,8 @@ export default function TravelPage() {
                     Your Cultural Itinerary Awaits
                   </h3>
                   <p className="text-xs text-zinc-400 max-w-md mx-auto">
-                    Select your taste anchors and destination to see Qloo resolve cross-category correlations into an authentic itinerary.
+                    Select your taste anchors or click one of the Judge Scenarios above to see Qloo resolve cross-category correlations into an authentic itinerary.
                   </p>
-                </div>
-                <div className="pt-2 flex items-center justify-center gap-2 text-[11px] text-zinc-500">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span>Ready for Qloo v2/insights inference</span>
                 </div>
               </div>
             )}
@@ -265,20 +315,18 @@ export default function TravelPage() {
                       </span>
                       <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-medium">
                         <CheckCircle className="w-3.5 h-3.5" />
-                        Qloo Verified Provenance
+                        Qloo Verified
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={handleExport}
-                        className="px-2.5 py-1 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 hover:text-white border border-white/[0.08] text-[11px] flex items-center gap-1.5 transition-colors"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>Export</span>
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={handleExport}
+                      className="px-2.5 py-1 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 hover:text-white border border-white/[0.08] text-[11px] flex items-center gap-1.5 transition-colors"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Export JSON</span>
+                    </button>
                   </div>
 
                   <p className="text-sm text-zinc-200 leading-relaxed font-medium">
@@ -292,7 +340,7 @@ export default function TravelPage() {
                   {/* Resolved Entities */}
                   <div className="pt-2 border-t border-white/[0.06] flex items-center gap-2 flex-wrap">
                     <span className="text-[10px] uppercase font-semibold text-zinc-500">
-                      Anchors:
+                      Resolved Anchors:
                     </span>
                     {result.seedEntitiesResolved.map((e) => (
                       <span
@@ -305,69 +353,104 @@ export default function TravelPage() {
                   </div>
                 </div>
 
-                {/* Itinerary Venues */}
-                <div className="space-y-4">
+                {/* Filter and Time Slots */}
+                <div className="flex items-center justify-between">
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-300 flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Curated Cultural Venues</span>
                   </h3>
 
-                  <div className="space-y-3">
-                    {result.venues.map((venue, idx) => (
-                      <div
-                        key={idx}
-                        className="p-5 rounded-2xl bg-[#0d101b] border border-white/[0.08] hover:border-indigo-500/40 transition-all space-y-3 group"
+                  <div className="flex items-center gap-1 text-[11px]">
+                    {["all", "morning", "afternoon", "evening", "late-night"].map((slot) => (
+                      <button
+                        key={slot}
+                        type="button"
+                        onClick={() => setFilterSlot(slot)}
+                        className={`px-2.5 py-1 rounded-lg capitalize transition-colors ${
+                          filterSlot === slot
+                            ? "bg-indigo-600 text-white font-semibold"
+                            : "bg-white/[0.04] text-zinc-400 hover:text-white"
+                        }`}
                       >
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                              <span className="px-2 py-0.5 rounded text-[10px] uppercase font-semibold tracking-wider bg-white/[0.06] text-zinc-300">
-                                {venue.timeSlot}
-                              </span>
-                              <span className="text-xs text-zinc-500">•</span>
-                              <span className="text-xs text-zinc-400">{venue.neighborhood}</span>
-                              {venue.priceLevel && (
-                                <span className="text-xs text-zinc-500 font-mono">
-                                  {venue.priceLevel}
-                                </span>
-                              )}
-                            </div>
-                            <h4 className="text-base font-bold text-white group-hover:text-indigo-200 transition-colors">
-                              {venue.name}
-                            </h4>
-                          </div>
-
-                          {/* Qloo Affinity Badge */}
-                          <div className="text-right shrink-0">
-                            <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-bold font-mono">
-                              <Sparkles className="w-3 h-3 text-indigo-400" />
-                              <span>{venue.qlooAffinityScore}% Affinity</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Explainability Section */}
-                        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">
-                            <Sparkles className="w-3 h-3 text-amber-400" />
-                            <span>Why Qloo Matched This:</span>
-                            <span className="text-zinc-200 normal-case font-normal">
-                              {venue.matchedTasteSignal}
-                            </span>
-                          </div>
-                          <p className="text-xs text-zinc-300 leading-relaxed">
-                            {venue.culturalRationale}
-                          </p>
-                        </div>
-                      </div>
+                        {slot}
+                      </button>
                     ))}
                   </div>
+                </div>
+
+                {/* Venues List */}
+                <div className="space-y-3">
+                  {filteredVenues.map((venue, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => setInspectVenue(venue)}
+                      className="p-5 rounded-2xl bg-[#0d101b] border border-white/[0.08] hover:border-indigo-500/50 hover:bg-[#131726]/80 transition-all space-y-3 group cursor-pointer"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded text-[10px] uppercase font-semibold tracking-wider bg-white/[0.06] text-zinc-300">
+                              {venue.timeSlot}
+                            </span>
+                            <span className="text-xs text-zinc-500">•</span>
+                            <span className="text-xs text-zinc-400">{venue.neighborhood}</span>
+                            {venue.priceLevel && (
+                              <span className="text-xs text-zinc-500 font-mono">
+                                {venue.priceLevel}
+                              </span>
+                            )}
+                          </div>
+                          <h4 className="text-base font-bold text-white group-hover:text-indigo-200 transition-colors flex items-center gap-2">
+                            <span>{venue.name}</span>
+                            <span className="text-[10px] font-normal text-zinc-500 group-hover:text-indigo-400 transition-colors">
+                              (Click to inspect graph telemetry)
+                            </span>
+                          </h4>
+                        </div>
+
+                        {/* Qloo Affinity Badge */}
+                        <div className="text-right shrink-0">
+                          <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-bold font-mono">
+                            <Sparkles className="w-3 h-3 text-indigo-400" />
+                            <span>{venue.qlooAffinityScore}% Affinity</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Explainability Section */}
+                      <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] space-y-1.5">
+                        <div className="flex items-center gap-1.5 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">
+                          <Sparkles className="w-3 h-3 text-amber-400" />
+                          <span>Why Qloo Matched This:</span>
+                          <span className="text-zinc-200 normal-case font-normal">
+                            {venue.matchedTasteSignal}
+                          </span>
+                        </div>
+                        <p className="text-xs text-zinc-300 leading-relaxed">
+                          {venue.culturalRationale}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
           </div>
         </div>
       </main>
+
+      {/* Cultural Graph Node Modal */}
+      {inspectVenue && (
+        <CulturalNodeModal
+          isOpen={Boolean(inspectVenue)}
+          onClose={() => setInspectVenue(null)}
+          entityName={inspectVenue.name}
+          category={inspectVenue.category}
+          affinityScore={inspectVenue.qlooAffinityScore}
+          matchedTasteSignal={inspectVenue.matchedTasteSignal}
+          culturalRationale={inspectVenue.culturalRationale}
+        />
+      )}
 
       <Footer />
     </div>

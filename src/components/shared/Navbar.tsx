@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, Compass, HeartHandshake, Wand2, Info, ArrowUpRight } from "lucide-react";
+import { Sparkles, Compass, HeartHandshake, Wand2, Info, ArrowUpRight, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -14,9 +15,27 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const [pythonOnline, setPythonOnline] = useState(false);
+
+  useEffect(() => {
+    async function checkBackend() {
+      try {
+        const res = await fetch("/api/qloo/health");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.pythonBackend?.online) {
+            setPythonOnline(true);
+          }
+        }
+      } catch {
+        // Backend check silent fallback
+      }
+    }
+    checkBackend();
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#07080d]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#07080d]/85 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
@@ -66,11 +85,18 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* Live Qloo Status & CTA */}
+        {/* Live Qloo & Python Status Indicators */}
         <div className="flex items-center gap-3">
+          {pythonOnline && (
+            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] text-blue-400 font-mono">
+              <Terminal className="w-3 h-3 text-blue-400" />
+              <span>Python FastAPI</span>
+            </div>
+          )}
+
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-400">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium">Qloo Taste Graph Active</span>
+            <span className="font-medium">Qloo Taste AI™ Active</span>
           </div>
 
           <Link

@@ -12,12 +12,33 @@ import {
   Download,
   AlertCircle,
   CheckCircle,
+  BarChart3,
 } from "lucide-react";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
 import { EntityTagInput } from "@/components/shared/EntityTagInput";
 import { AgentReasoningSteps } from "@/components/shared/AgentReasoningSteps";
-import { MatchOutput } from "@/types/agent";
+import { CulturalNodeModal } from "@/components/shared/CulturalNodeModal";
+import { MatchOutput, MatchIntersectionItem } from "@/types/agent";
+
+const MATCH_PRESETS = [
+  {
+    label: "Auteur Clash: Tarantino vs Wes Anderson",
+    aName: "Elena",
+    aTastes: ["Quentin Tarantino", "Fleetwood Mac", "Italian Wine"],
+    bName: "Julian",
+    bTastes: ["Wes Anderson", "Daft Punk", "Scandinavian Design"],
+    city: "Tokyo",
+  },
+  {
+    label: "Sonic Bridge: Radiohead vs French House",
+    aName: "Maya",
+    aTastes: ["Radiohead", "Tadao Ando", "Haruki Murakami"],
+    bName: "Leo",
+    bTastes: ["Daft Punk", "Maison Margiela", "Cyberpunk 2077"],
+    city: "Tokyo",
+  },
+];
 
 export default function MatchPage() {
   const [personAName, setPersonAName] = useState("Elena");
@@ -41,6 +62,17 @@ export default function MatchPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [result, setResult] = useState<MatchOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const [inspectItem, setInspectItem] = useState<MatchIntersectionItem | null>(null);
+
+  const loadPreset = (p: typeof MATCH_PRESETS[0]) => {
+    setPersonAName(p.aName);
+    setPersonATastes(p.aTastes);
+    setPersonBName(p.bName);
+    setPersonBTastes(p.bTastes);
+    setTargetCity(p.city);
+    setResult(null);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,18 +138,40 @@ export default function MatchPage() {
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-        {/* Header section */}
-        <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold text-violet-400">
-            <HeartHandshake className="w-3.5 h-3.5" />
-            <span>AGENT 2: JEEVAN MATCH</span>
+        {/* Header section with Presets */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.06] pb-8">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold text-violet-400">
+              <HeartHandshake className="w-3.5 h-3.5" />
+              <span>AGENT 2: JEEVAN MATCH</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              Cultural Compatibility & Date Planner
+            </h1>
+            <p className="text-sm sm:text-base text-zinc-400 max-w-2xl leading-relaxed">
+              Discover meaningful intersections between two taste profiles. Powered by Qloo Taste AI and <strong className="text-zinc-200">Maximin Fairness</strong>—guaranteeing neither person is compromised into an experience they dislike.
+            </p>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Cultural Compatibility & Date Planner
-          </h1>
-          <p className="text-sm sm:text-base text-zinc-400 max-w-2xl leading-relaxed">
-            Discover meaningful cultural intersections between two different taste profiles. Powered by Qloo Taste AI and <strong className="text-zinc-200">Maximin Fairness</strong>—ensuring neither person gets dragged somewhere they hate.
-          </p>
+
+          {/* Quick-Load Judge Presets */}
+          <div className="space-y-2 shrink-0">
+            <span className="text-[11px] text-zinc-400 flex items-center gap-1.5 font-medium">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>Judge Quick-Start Scenarios:</span>
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {MATCH_PRESETS.map((p, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => loadPreset(p)}
+                  className="px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-violet-600/20 text-zinc-300 hover:text-violet-200 border border-white/[0.08] hover:border-violet-500/40 text-xs font-medium transition-all"
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Input Form & Preview */}
@@ -221,7 +275,7 @@ export default function MatchPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-600 to-fuchsia-600 text-white font-semibold text-xs tracking-wide shadow-lg shadow-violet-600/30 hover:opacity-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 via-violet-600 to-fuchsia-600 text-white font-semibold text-xs tracking-wide shadow-lg shadow-violet-600/30 hover:opacity-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -254,7 +308,7 @@ export default function MatchPage() {
                     Find Meaningful Intersections
                   </h3>
                   <p className="text-xs text-zinc-400 max-w-md mx-auto">
-                    Enter cultural preferences for two people to uncover shared aesthetic DNA and construct a tailored date experience.
+                    Enter cultural preferences for two people or load a Judge Scenario above to see Qloo compute true taste fairness.
                   </p>
                 </div>
               </div>
@@ -280,7 +334,7 @@ export default function MatchPage() {
                       className="px-2.5 py-1 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 hover:text-white border border-white/[0.08] text-[11px] flex items-center gap-1.5 transition-colors"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>Export</span>
+                      <span>Export JSON</span>
                     </button>
                   </div>
 
@@ -305,6 +359,67 @@ export default function MatchPage() {
                       >
                         {anchor}
                       </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Maximin Intersection Visualizer */}
+                <div className="p-5 rounded-2xl bg-[#0d101b] border border-white/[0.08] space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-zinc-300 flex items-center gap-1.5">
+                      <BarChart3 className="w-4 h-4 text-violet-400" />
+                      <span>Maximin Taste Alignment Balance</span>
+                    </span>
+                    <span className="text-[10px] text-zinc-400 font-mono">
+                      Guaranteed Floor = min(Person 1, Person 2)
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 pt-1">
+                    {result.rankedIntersections.map((item, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => setInspectItem(item)}
+                        className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-violet-500/40 transition-colors cursor-pointer space-y-2 group"
+                      >
+                        <div className="flex items-center justify-between text-xs font-semibold">
+                          <span className="text-white group-hover:text-violet-200 transition-colors">
+                            {item.venueOrActivity}
+                          </span>
+                          <span className="text-violet-400 font-mono text-[11px]">
+                            {item.maximinFairnessScore}% Mutual Floor
+                          </span>
+                        </div>
+
+                        {/* Dual bar comparison */}
+                        <div className="space-y-1 text-[10px]">
+                          <div className="flex items-center gap-2">
+                            <span className="w-16 text-indigo-300 truncate">{personAName}:</span>
+                            <div className="flex-1 bg-white/[0.06] h-1.5 rounded-full overflow-hidden">
+                              <div
+                                className="bg-indigo-500 h-full rounded-full"
+                                style={{ width: `${item.personAAffinity}%` }}
+                              />
+                            </div>
+                            <span className="font-mono text-zinc-400 w-8 text-right">
+                              {item.personAAffinity}%
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <span className="w-16 text-violet-300 truncate">{personBName}:</span>
+                            <div className="flex-1 bg-white/[0.06] h-1.5 rounded-full overflow-hidden">
+                              <div
+                                className="bg-violet-500 h-full rounded-full"
+                                style={{ width: `${item.personBAffinity}%` }}
+                              />
+                            </div>
+                            <span className="font-mono text-zinc-400 w-8 text-right">
+                              {item.personBAffinity}%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -354,6 +469,19 @@ export default function MatchPage() {
           </div>
         </div>
       </main>
+
+      {/* Inspect Item Modal */}
+      {inspectItem && (
+        <CulturalNodeModal
+          isOpen={Boolean(inspectItem)}
+          onClose={() => setInspectItem(null)}
+          entityName={inspectItem.venueOrActivity}
+          category={inspectItem.category}
+          affinityScore={inspectItem.maximinFairnessScore}
+          matchedTasteSignal={inspectItem.sharedAestheticGround}
+          culturalRationale={inspectItem.whyItWorksForBoth}
+        />
+      )}
 
       <Footer />
     </div>
